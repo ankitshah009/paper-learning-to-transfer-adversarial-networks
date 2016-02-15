@@ -17,7 +17,9 @@
 % natbib option: authoryear
 \documentclass[aoas,preprint,authoryear]{imsart}
 
-\usepackage{amsthm,amsmath,natbib}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{natbib}
 \RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 
 % provide arXiv number if available:
@@ -30,8 +32,8 @@
 \begin{document}
 
 \begin{frontmatter}
-\title{Learning to Transfer through\\
-       Generative Adversarial Neural Networks}
+\title{Learning to Transfer with\\
+       Triply Adversarial Neural Networks}
 
 % indicate corresponding author with \corref{}
 % \author{\fnms{John} \snm{Smith}\corref{}\ead[label=e1]{smith@foo.com}\thanksref{t1}}
@@ -44,38 +46,30 @@
 
 \begin{abstract}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod feugiat
-efficitur. Vivamus pulvinar imperdiet elit, et pharetra ipsum tincidunt ut. Cras
-sollicitudin pharetra fringilla. Proin tempus ornare arcu, ac volutpat neque
-efficitur eu. Ut et quam eleifend, facilisis sapien vitae, finibus dui. Nam
-iaculis ante id metus venenatis, sit amet lobortis elit scelerisque. Quisque
-imperdiet volutpat mi, non placerat quam auctor in. Fusce vel consequat ipsum.
-In vestibulum quis est eu rutrum. Ut nec orci eu diam gravida rutrum id sit amet
-dui. Donec nec est aliquet, pulvinar elit non, tristique ex. Donec eu fermentum
-elit.
+Learning under covariate shift, also known as transfer learning or domain
+adaptation, arises in supervised learning whenever test instances are governed
+by a distribution that may be arbitrarily different from the distribution of the
+training instances. This problem has traditionally been solved either by
+reweighting training instances or by learning feature representations that are
+robust to domain adaptation. In this work, we propose a new paradigm which
+consists instead in learning to transform training instances into test
+instances. We extend the generative adversarial networks framework
+\citep{goodfellow2014generative} to a triply adversarial process: a transformer
+network $T$ for generating test instances from training instances, a
+discriminative network $D$ for estimating whether an instance comes either from
+the training or the test distributions, and a classifier network $C$ for
+classifying training instances in the projected space. Accordingly, this
+3-player game results in a network $T$ capable of transforming training
+instances into test instances, while preserving the separation between classes.
+Experimental results demonstrate the potential of this novative approach and
+illustrate the importance of both regularization and network architecture for
+controlling the learned transformation.
 
 \end{abstract}
 
 \end{frontmatter}
 
 \section{Introduction}
-
-Maecenas tempor nulla eget mi accumsan, non accumsan elit sagittis. Mauris quis
-erat metus. Cras semper magna lectus, vitae interdum libero vehicula et. Proin
-eget fermentum tortor. Pellentesque in auctor ipsum. Donec non mauris non tellus
-vulputate vehicula. Nulla interdum odio bibendum consequat lobortis.
-
-Mauris non volutpat mauris. Donec condimentum felis in tincidunt sollicitudin.
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-turpis egestas. Nullam ut risus sed leo ornare volutpat. Morbi massa nisl,
-bibendum nec enim ac, mollis placerat lorem. Aliquam eget mauris at libero
-vehicula convallis vitae id urna. Donec at finibus tellus, quis iaculis nibh.
-Vestibulum quis odio felis. Suspendisse finibus, magna at laoreet tincidunt,
-urna nunc pellentesque risus, id pulvinar ipsum dolor sed elit. Sed sollicitudin
-augue vel quam laoreet, eget egestas ipsum dignissim. Mauris commodo, dui ac
-tempor facilisis, libero ipsum pellentesque mi, quis maximus sem libero nec
-ante. Cras ac luctus odio. Phasellus pretium mi in fermentum pulvinar. Sed nec
-lorem magna.
 
 \section{Method}
 
@@ -91,9 +85,13 @@ lorem magna.
 % - in this work, we propose instead a new paradigm for solving transfer learning
 % - build a generative model for transforming samples from p1 to reproduce p0
 % - adversarial learning from Goodfellow, with the practical difference that we often have only a finite set of samples (we need to avoid learning a lookup table)
+% - ensure p(y|t(x)) ~ p(y|x) by having a third classifier in the mix
 % - regularization
 % - network architecture (propagate x, similar to highway networks)
 % - experiments
 % - application: fix simulated data
+
+\bibliographystyle{apalike}
+\bibliography{bibliography.bib}
 
 \end{document}
