@@ -41,24 +41,29 @@
 
 \begin{abstract}
 
-Learning under covariate shift, also known as transfer learning or domain
-adaptation, arises in supervised learning whenever test instances are governed
-by a distribution that may be arbitrarily different from the distribution of the
-training instances. This problem has traditionally been solved either by
-reweighting training instances or by learning feature representations that are
-robust to domain adaptation. In this work, we propose a new paradigm which
-consists instead in learning how to transform training instances into test
-instances. For this purpose, we extend the generative adversarial networks framework
-of \cite{goodfellow2014generative} to a triply adversarial process: a transformer
-network $T$ for generating test instances from training instances, a
+Transfer learning, and its variants known as learning under covariate shift or
+domain adaptation, arises whenever test instances are governed by a distribution
+that may be arbitrarily different from the distribution of the training
+instances. This problem has traditionally been solved either by reweighting
+training instances or by learning robust feature representations over domains.
+In this work, we propose a new paradigm which consists instead in learning how
+to transform training instances into test instances, possibly across distinct
+input spaces. For this purpose, we extend the generative adversarial networks
+framework of \cite{goodfellow2014generative} to a triply adversarial process: a
+transformer network $T$ for generating test instances from training instances, a
 discriminative network $D$ for estimating whether an instance comes either from
-the training or the test distributions, and a classifier network $C$ for
-classifying training instances in the projected space. Accordingly, this
-3-player game results in a network $T$ capable of transforming training
-instances into test instances, while preserving the separation between classes.
-Experimental results demonstrate the potential of this novative approach for
-transfer learning and illustrate the importance of both regularization and
-network architecture for controlling the learned transformation.
+the training or the test distributions, and a classifier network $C \circ T$ for
+classifying training instances in the projected space. This 3-player game
+results in a network $T$ capable of transforming training instances into test
+instances, while preserving the separation between classes. Experimental results
+demonstrate the potential of this novative approach to transfer learning. More
+fundamentally, this paradigm also raises interesting theoretical issues, since
+such transformations may not always be unique nor necessarily grounded,
+depending on the studied problem.
+
+
+% we should state that it makes sense only when the same object (\in Omega) can exists in both space, or when there is a suitable transformation from one to the other
+
 
 \end{abstract}
 
@@ -66,25 +71,35 @@ network architecture for controlling the learned transformation.
 
 \section{Introduction}
 
-\section{Method}
-
-\section{Experiments}
-
-\section{Related work}
-
-\section{Conclusions}
-
-% Outline:
 % - transfer learning has traditionally been solved through density ratio reweighting
-% - works fine, but has the big issue of not working if the support of the source density does not cover the target density support
+% - works fine, but has the big issue of not working if the support of the source density does not cover the target density support\
+%   support is needed for reweighting, but not here (Gretton et al) we can even have different space
+
 % - in this work, we propose instead a new paradigm for solving transfer learning
 % - build a generative model for transforming samples from p1 to reproduce p0
 % - adversarial learning from Goodfellow, with the practical difference that we often have only a finite set of samples (we need to avoid learning a lookup table)
 % - ensure p(y|t(x)) ~ p(y|x) by having a third classifier in the mix
+
+% - application: fix simulated data
+
+\section{Method}
+
+% framework
+% doubly adversarial network
+% triply adversarial
+% proofs?
+% regularization
+
+\section{Experiments}
+
 % - regularization
 % - network architecture (propagate x, similar to highway networks)
-% - experiments
-% - application: fix simulated data
+
+\section{Related work}
+
+% also related to multi-view learning
+
+\section{Conclusions}
 
 \bibliographystyle{apalike}
 \bibliography{bibliography.bib}
