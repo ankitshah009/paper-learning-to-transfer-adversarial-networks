@@ -22,12 +22,7 @@
 \usepackage{natbib}
 \RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 
-% provide arXiv number if available:
-%\arxiv{arXiv:0000.0000}
-
-% put your definitions there:
-\startlocaldefs
-\endlocaldefs
+\newcommand{\glnote}[1]{\textcolor{red}{[GL: #1]}}
 
 \begin{document}
 
@@ -52,18 +47,18 @@ by a distribution that may be arbitrarily different from the distribution of the
 training instances. This problem has traditionally been solved either by
 reweighting training instances or by learning feature representations that are
 robust to domain adaptation. In this work, we propose a new paradigm which
-consists instead in learning to transform training instances into test
-instances. We extend the generative adversarial networks framework
-\citep{goodfellow2014generative} to a triply adversarial process: a transformer
+consists instead in learning how to transform training instances into test
+instances. For this purpose, we extend the generative adversarial networks framework
+of \cite{goodfellow2014generative} to a triply adversarial process: a transformer
 network $T$ for generating test instances from training instances, a
 discriminative network $D$ for estimating whether an instance comes either from
 the training or the test distributions, and a classifier network $C$ for
 classifying training instances in the projected space. Accordingly, this
 3-player game results in a network $T$ capable of transforming training
 instances into test instances, while preserving the separation between classes.
-Experimental results demonstrate the potential of this novative approach and
-illustrate the importance of both regularization and network architecture for
-controlling the learned transformation.
+Experimental results demonstrate the potential of this novative approach for
+transfer learning and illustrate the importance of both regularization and
+network architecture for controlling the learned transformation.
 
 \end{abstract}
 
