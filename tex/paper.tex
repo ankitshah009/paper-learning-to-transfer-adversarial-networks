@@ -27,8 +27,7 @@
 \begin{document}
 
 \begin{frontmatter}
-\title{Learning to Transfer with\\
-       Triply Adversarial Neural Networks}
+\title{Learning to Transfer across Distinct Domains with Triply Adversarial Nets}
 
 % indicate corresponding author with \corref{}
 % \author{\fnms{John} \snm{Smith}\corref{}\ead[label=e1]{smith@foo.com}\thanksref{t1}}
@@ -48,22 +47,20 @@ instances. This problem has traditionally been solved either by reweighting
 training instances or by learning robust feature representations over domains.
 In this work, we propose a new paradigm which consists instead in learning how
 to transform training instances into test instances, possibly across distinct
-input spaces. For this purpose, we extend the generative adversarial networks
-framework of \cite{goodfellow2014generative} to a triply adversarial process: a
-transformer network $T$ for generating test instances from training instances, a
-discriminative network $D$ for estimating whether an instance comes either from
-the training or the test distributions, and a classifier network $C \circ T$ for
-classifying training instances in the projected space. This 3-player game
-results in a network $T$ capable of transforming training instances into test
-instances, while preserving the separation between classes. Experimental results
-demonstrate the potential of this novative approach to transfer learning. More
-fundamentally, this paradigm also raises interesting theoretical issues, since
-such transformations may not always be unique nor necessarily grounded,
-depending on the studied problem.
-
-
-% we should state that it makes sense only when the same object (\in Omega) can exists in both space, or when there is a suitable transformation from one to the other
-
+input spaces of different dimensions and structures. For this purpose, we extend
+the generative adversarial networks framework of \cite{goodfellow2014generative}
+to a triply adversarial process: a transformer network $T$ for generating test
+instances from training instances, a discriminative network $D$ for estimating
+whether an instance comes either from the training or the test distributions,
+and a classifier network $C \circ T$ for classifying training instances in the
+projected space. This 3-player game results in a network $T$ capable of
+transforming training instances into test instances, while preserving the
+separation between classes, so that $C$ would remain an accurate classifier on test data.
+Experimental results demonstrate the potential of
+this novative approach for transfer learning.
+% More fundamentally, this paradigm
+% also raises interesting theoretical issues, since transformations may not always
+% be unique nor necessarily grounded, depending on the studied problem.
 
 \end{abstract}
 
@@ -82,6 +79,9 @@ depending on the studied problem.
 
 % - application: fix simulated data
 
+% Ganin: domains share the same input space, we dont necessarily have to
+%        seek a common robust representation, here we seek instead to transform training into test
+
 \section{Method}
 
 % framework
@@ -89,6 +89,9 @@ depending on the studied problem.
 % triply adversarial
 % proofs?
 % regularization
+
+% we should state that it makes sense only when the same object (\in Omega) can exists in both space, or when there is a suitable transformation from one to the other
+
 
 \section{Experiments}
 
