@@ -40,27 +40,26 @@
 
 \begin{abstract}
 
-Transfer learning, and its variants known as learning under covariate shift,
-domain adaptation or even multi-view learning, arises whenever test instances are
-governed by a distribution that may be arbitrarily different from the
-distribution of the training instances. This problem has traditionally been
-solved either by reweighting training instances or by learning robust feature
-representations over domains. In this work, we propose a new paradigm which
-consists instead in learning how to transform training instances into test
-instances, possibly across distinct input spaces of different dimensions and
-structures. For this purpose, we extend the generative adversarial networks
-framework of \cite{goodfellow2014generative} to a triply adversarial process: a
-transformer network $T$ for generating test instances from training instances, a
+Transfer learning, and its variants known as learning under covariate shift or
+domain adaptation, arises whenever test instances are governed by a distribution
+that may be arbitrarily different from the distribution of the training
+instances. This problem has traditionally been solved either by reweighting
+training instances or by learning robust feature representations over domains.
+In this work, we propose a new paradigm which consists instead in learning how
+to transform training instances into test instances, possibly across input
+spaces of distinct dimensions, structures or supports. For this purpose, we
+extend the generative adversarial networks framework of
+\cite{goodfellow2014generative} to a triply adversarial process: a transformer
+network $T$ for generating test instances from training instances, a
 discriminative network $D$ for estimating whether an instance comes either from
 the training or the test distributions, and a classifier network $C \circ T$ for
 classifying training instances in the projected space. This 3-player game
 results in a network $T$ capable of transforming training instances into test
 instances, while preserving the separation between classes, so that $C$ should
 be an accurate classifier on test data. Experimental results demonstrate the
-potential of this novative approach for transfer learning.
-More fundamentally, this paradigm
-also raises interesting theoretical issues, since transformations may not always
-be unique nor necessarily grounded, depending on the studied problem.
+potential of this novative approach for transfer learning. More fundamentally,
+this paradigm also raises interesting theoretical issues, since transformations
+may not always be unique nor grounded, depending on the studied problem.
 
 % other view point: C is a regularizer
 
