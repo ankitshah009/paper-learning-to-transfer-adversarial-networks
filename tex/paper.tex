@@ -41,7 +41,7 @@
 
 \begin{abstract}
 
-Transfer learning, and its variants known as learning under covariate shift or
+Transfer learning, and its variants such as learning under covariate shift or
 domain adaptation, arises whenever test instances are governed by a distribution
 that may be arbitrarily different from the distribution of the training
 instances. This problem has traditionally been solved either by reweighting
@@ -56,13 +56,11 @@ discriminative network $D$ for estimating whether an instance comes either from
 the training or the test distributions, and a classifier network $C \circ T$ for
 classifying training instances in the projected space. This 3-player game
 results in a network $T$ capable of transforming training instances into test
-instances, while preserving the separation between classes, so that $C$ should
+instances, while preserving separation between classes, so that $C$ should
 be an accurate classifier on test data. Experimental results demonstrate the
 potential of this novative approach for transfer learning. More fundamentally,
 this paradigm also raises interesting theoretical issues, since transformations
 may not always be unique nor grounded, depending on the studied problem.
-
-% other view point: C is a regularizer
 
 \end{abstract}
 
@@ -77,7 +75,10 @@ may not always be unique nor grounded, depending on the studied problem.
 % - in this work, we propose instead a new paradigm for solving transfer learning
 % - build a generative model for transforming samples from p1 to reproduce p0
 % - adversarial learning from Goodfellow, with the practical difference that we often have only a finite set of samples (we need to avoid learning a lookup table)
+
+% other view point: start from dual adversaries, then add to the mix C is a regularizer
 % - ensure p(y|t(x)) ~ p(y|x) by having a third classifier in the mix
+% issue: T is not unique, how make sure samples are mapped correctly?
 
 % - application: fix simulated data
 
@@ -88,9 +89,8 @@ may not always be unique nor grounded, depending on the studied problem.
 
 % framework
 % doubly adversarial network
-% triply adversarial
+% T is not unique => triply adversarial + regularization
 % proofs?
-% regularization
 
 % we should state that it makes sense only when the same object (\in Omega) can exists in both space, or when there is a suitable transformation from one to the other
 
