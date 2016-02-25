@@ -41,7 +41,7 @@
 
 \begin{abstract}
 
-Transfer learning, and its variants such as learning under covariate shift or
+Transfer learning, and its variants such as covariate shift or
 domain adaptation, arises whenever test instances are governed by a distribution
 that may be arbitrarily different from the distribution of the training
 instances. This problem has traditionally been solved either by reweighting
@@ -52,15 +52,15 @@ spaces of distinct dimensions, structures or supports. For this purpose, we
 extend the generative adversarial networks framework of
 \cite{goodfellow2014generative} to a triply adversarial process: a transformer
 network $T$ for generating test instances from training instances, a
-discriminative network $D$ for estimating whether an instance comes either from
-the training or the test distributions, and a classifier network $C \circ T$ for
-classifying training instances in the projected space. This 3-player game
-results in a network $T$ capable of transforming training instances into test
-instances, while preserving separation between classes as enabled by $C$ in the
-adversarial setup. Experimental results demonstrate the potential of this
-novative approach for transfer learning.  More fundamentally, this paradigm also
-raises new theoretical issues, since transformations $T$  may not
-be unique nor all grounded, yet we seek only the one making most sense.
+discriminative network $D$ for separating transformed training instances from
+test instances, and a classifier network $C \circ T$ for classifying training
+instances in the projected space. This 3-player game results in a network $T$
+capable of transforming training instances into test instances, while preserving
+separation between classes as enabled by $C$ in the adversarial setup.
+Experimental results demonstrate the potential of this novative approach for
+transfer learning.  More fundamentally, this paradigm also raises new
+theoretical issues, since transformations $T$  may not be unique nor all
+grounded, yet we seek only the one making most sense.
 
 \end{abstract}
 
