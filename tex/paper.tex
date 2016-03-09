@@ -79,23 +79,44 @@ way  from a few labeled instances from the target space.
 % Ganin: domains share the same input space, we dont necessarily have to
 %        seek a common robust representation, here we seek instead to transform training into test
 
-\section{Method}
+\section{Problem statement}
 
 Let assume a probability space $(\Omega, {\cal F}, P)$, where $\Omega$ is a
-sample space, ${\cal F}$ is a set of events and $P$ is a probability measure.
-Let also assume a (multivariate) random variable $X: \Omega \mapsto
-\mathbb{R}^p$ along with a finite set $\{x_i\}_{i=1}^N$ of its realizations
-$X(\omega_i)$, for $\omega_i \in \Omega$. Similarly, let assume a (multivariate)
-random variable $U: \Omega \mapsto \mathbb{R}^q$, sharing the same underlying
-probability space as $X$, along with a finite set $\{u_j\}_{j=1}^M$ of its realizations
-$U(\omega_j)$, for $\omega_j \in \Omega$.  Assuming it exists, our goal is to find a
-transfer function $T: \mathbb{R}^p \mapsto \mathbb{R}^q$ such that
-$T(X(\omega)) = U(\omega)$ for all $\omega \in \Omega$.
+sample space, ${\cal F}$ is a set of events and $P$ is a probability measure. In
+this setup, let consider a (multivariate) random variable $X: \Omega \mapsto
+\mathbb{R}^p$ inducing the source distribution, along with a
+finite set $\{x_i\}_{i=1}^N$ of its realizations $X(\omega_i)$, for $\omega_i
+\in \Omega$.
+In classification, let us further assume that realizations from the source distribution are extended with realizations $\{y_i\}_{i=1}^N$
+of a label random variable $Y:\Omega \mapsto {\cal Y}$.
+Similarly, let assume a (multivariate) random variable $U: \Omega
+\mapsto \mathbb{R}^q$ inducing the target distribution, along with a finite set
+$\{u_j\}_{j=1}^M$ of its realizations $U(\omega_j)$, for $\omega_j \in \Omega$.
+Assuming it exists, our goal is to find a transfer function $T: \mathbb{R}^p \times {\cal Y}
+\mapsto \mathbb{R}^q$ such that
+\begin{equation}\label{eqn:tf}
+T(X(\omega), Y(\omega)) = U(\omega) ~\text{for all}~ \omega \in \Omega.
+\end{equation}
 
-Since we do not have training pairs $(X(\omega), U(\omega))$ (for the same
+Since we do not have training pairs $((X(\omega), Y(\omega)), U(\omega))$ (for the same
 unknown $\omega$) from which $T$ could be learned using standard regression
 algorithms, we propose instead to solve the closely related problem of
-finding a transfer function $\hat T$ such that $P_{\hat{T}(X)} = P_U$. \glnote{Be more precise on the definition of equality.}
+finding a transfer function $\hat T$ such that
+\begin{equation}\label{eqn:tf-proxy}
+P(\{ \omega | \hat T(X(\omega), Y(\omega)) = u \}) = P(\{ \omega' | U(\omega') = u \}) ~\text{for all}~ u \in \mathbb{R}^q.
+\end{equation}
+In words, we are looking for a transfer function $\hat T$ such
+that realizations of $\hat T(X, Y)$ are undistinguisable from realizations of $U$.
+A function $T$ for which Eqn.~\ref{eqn:tf} is true necessarily satisfies
+Eqn.~\ref{eqn:tf-proxy}. The converse is however in general not true.
+Accordingly, the contribution of this
+work is to propose a procedure for constructing transfer functions satisfying
+Eqn.~\ref{eqn:tf-proxy}, and for which Eqn.~\ref{eqn:tf} is {\it plausibly}
+satisfied.
+
+
+
+\section{Method}
 
 
 
