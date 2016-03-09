@@ -3,8 +3,9 @@
 \usepackage{nips15submit_e,times}
 \usepackage{hyperref}
 \usepackage{url}
-\usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{amsthm}
 
 \newcommand{\glnote}[1]{\textcolor{red}{[GL: #1]}}
 
@@ -41,8 +42,8 @@ or domain adaptation) arises whenever target instances are governed by a
 distribution that may be arbitrarily different from the distribution of the
 source instances. This problem has traditionally been solved by reweighting
 approaches or by learning robust representations over domains. In this work, we
-propose a new paradigm based on the assumption that the covariate shift is
-caused by the use of a different representation of the same underlying objects.
+propose a new paradigm based on the assumption that the covariate shift is only
+due to a different representation of the same underlying objects.
 Accordingly, we propose to learn how to transform source instances into target
 instances, possibly across input spaces of distinct dimensions, structures or
 supports. For this purpose, we extend the generative adversarial networks
@@ -80,6 +81,24 @@ way  from a few labeled instances from the target space.
 
 \section{Method}
 
+Let assume a probability space $(\Omega, {\cal F}, P)$, where $\Omega$ is a
+sample space, ${\cal F}$ is a set of events and $P$ is a probability measure.
+Let also assume a (multivariate) random variable $X: \Omega \mapsto
+\mathbb{R}^p$ along with a finite set $\{x_i\}_{i=1}^N$ of its realizations
+$X(\omega_i)$, for $\omega_i \in \Omega$. Similarly, let assume a (multivariate)
+random variable $U: \Omega \mapsto \mathbb{R}^q$, sharing the same underlying
+probability space as $X$, along with a finite set $\{u_j\}_{j=1}^M$ of its realizations
+$U(\omega_j)$, for $\omega_j \in \Omega$.  Assuming it exists, our goal is to find a
+transfer function $T: \mathbb{R}^p \mapsto \mathbb{R}^q$ such that
+$T(X(\omega)) = U(\omega)$ for all $\omega \in \Omega$.
+
+Since we do not have training pairs $(X(\omega), U(\omega))$ (for the same
+unknown $\omega$) from which $T$ could be learned using standard regression
+algorithms, we propose instead to solve the closely related problem of
+finding a transfer function $\hat T$ such that $P_{\hat{T}(X)} = P_U$. \glnote{Be more precise on the definition of equality.}
+
+
+
 % framework
 % doubly adversarial network
 % T is not unique => triply adversarial + regularization
@@ -100,7 +119,7 @@ way  from a few labeled instances from the target space.
 \section{Conclusions}
 
 
-\subsubsection*{Acknowledgments}
+\subsection*{Acknowledgments}
 
 \glnote{todo}
 
