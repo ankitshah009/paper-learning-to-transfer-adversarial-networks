@@ -54,7 +54,7 @@ actual target instances, and a classifier network $C \circ T$ for classifying so
 instances in the projected space. This 3-player game results in a network $T$
 capable of transforming source into target instances, while preserving
 separation between classes as enabled by $C$ in the adversarial setup.
-Experiments demonstrate the potential of this novative approach, with promising
+Experiments demonstrate the potential of this novel approach, with promising
 results when the construction of $C$ can be bootstrapped in a semi-supervised
 way  from a few labeled instances from the target space.
 
@@ -110,7 +110,7 @@ In words, we are looking for a transfer function $\hat T$ such that realizations
 of $\hat T(X,Y)$ are undistinguisable from realizations of $U$. A function $T$ for
 which Eqn.~\ref{eqn:tf} is true necessarily satisfies Eqn.~\ref{eqn:tf-proxy}.
 The converse is however in general not true, since the sets of events $\{ \omega |
-\hat T(X(\omega)) = u \}$ and $\{ \omega' | U(\omega') = u \}$ do not need to be
+\hat T(X(\omega), Y(\omega)) = u \}$ and $\{ \omega' | U(\omega') = u \}$ do not need to be
 the same for the equality to hold. Accordingly, the contribution of this work is
 to propose a procedure for constructing transfer functions satisfying
 Eqn.~\ref{eqn:tf-proxy}, and for which Eqn.~\ref{eqn:tf} is {\it plausibly}
@@ -132,14 +132,15 @@ of a measurement apparatus (but not of the underlying objects to be observed).
 
 \section{Method}
 
-
-
+\glnote{Describe GAN approach with three networks.}
 % framework
 % doubly adversarial network
 % T is not unique => triply adversarial + regularization
 % proofs?
 
-% we should state that it makes sense only when the same object (\in Omega) can exists in both space, or when there is a suitable transformation from one to the other
+\glnote{Regularization}
+
+\glnote{Semi-supervised transfer learning}
 % semi-supervised transfer learning: use seeds from the target space to bootstrap C
 
 \section{Experiments}
