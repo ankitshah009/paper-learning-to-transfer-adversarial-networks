@@ -40,7 +40,7 @@ New York University\\
 In classification, transfer learning (or its variants known as covariate shift
 or domain adaptation) arises whenever target instances are governed by a
 distribution that may be arbitrarily different from the distribution of the
-source instances. This problem has traditionally been solved by reweighting
+source instances used at training. This problem has traditionally been solved by reweighting
 approaches or by learning robust representations over domains. In this work, we
 propose a new paradigm based on the assumption that the covariate shift is only
 due to a different representation of the same underlying objects.
@@ -116,7 +116,18 @@ to propose a procedure for constructing transfer functions satisfying
 Eqn.~\ref{eqn:tf-proxy}, and for which Eqn.~\ref{eqn:tf} is {\it plausibly}
 satisfied.
 
+In these terms, our framework encompasses the problems of transfer learning,
+domain adapatation or covariate shift, where the labeled training samples
+correspond to the labeled realizations of the source distribution and where the
+unlabeled test samples corespond to realizations of the target distribution. At
+its core, this framework assumes that the underlying objects $\omega$ share a
+same universe $\Omega$ and that the source and target distributions only differ
+in the way they represent these objects. While not verified in all cases, we
+believe this assumption to be met in many practical situations, e.g., when learning to transfer
+across natural images from distinct datasets or when learning to adapt to a change
+of a measurement apparatus (but not of the underlying objects to be observed).
 
+% XXX: unsupervised learning
 
 
 \section{Method}
