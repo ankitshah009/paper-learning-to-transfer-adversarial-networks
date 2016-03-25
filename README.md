@@ -1,1 +1,3 @@
-# paper-learning-to-transfer-adversarial-networks
+# Learning to Transfer with Triply Adversarial Nets
+
+Work in progress...

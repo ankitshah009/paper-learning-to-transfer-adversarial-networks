@@ -54,13 +54,15 @@ actual target instances, and a classifier network $C \circ T$ for classifying so
 instances in the projected space. This 3-player game results in a network $T$
 capable of transforming source into target instances, while preserving
 separation between classes as enabled by $C$ in the adversarial setup.
-Experiments demonstrate the potential of this novel approach, with promising
+Preliminary experiments demonstrate the potential of this novel approach, with promising
 results when the construction of $C$ can be bootstrapped in a semi-supervised
 way  from a few labeled instances from the target space.
 
 \end{abstract}
 
 \section{Introduction}
+
+\glnote{to write}
 
 % - transfer learning has traditionally been solved through density ratio reweighting
 % - works fine, but has the big issue of not working if the support of the source density does not cover the target density support\
@@ -84,14 +86,14 @@ way  from a few labeled instances from the target space.
 Let assume a probability space $(\Omega, {\cal F}, P)$, where $\Omega$ is a
 sample space, ${\cal F}$ is a set of events and $P$ is a probability measure.
 Let consider a (multivariate) random variable $X: \Omega \mapsto
-\mathbb{R}^p$ inducing the source distribution, along with a
+\mathbb{R}^p$ inducing the source distribution $p_X$, along with a
 finite set $\{x_i\}_{i=1}^N$ of its realizations $X(\omega_i)$, for $\omega_i
 \in \Omega$.
 In classification,
 let us further assume that realizations from the source distribution are extended with realizations $\{y_i\}_{i=1}^N$
 of a label random variable $Y:\Omega \mapsto {\cal Y}$.
 Similarly, let assume a (multivariate) random variable $U: \Omega
-\mapsto \mathbb{R}^q$ inducing the target distribution, along with a finite set
+\mapsto \mathbb{R}^q$ inducing the target distribution $p_U$, along with a finite set
 $\{u_j\}_{j=1}^M$ of its realizations $U(\omega_j)$, for $\omega_j \in \Omega$.
 Assuming it exists, our goal is to find a transfer function $T: \mathbb{R}^p \times {\cal Y}
 \mapsto \mathbb{R}^q$ such that
@@ -119,13 +121,14 @@ satisfied.
 In these terms, our framework encompasses the problems of transfer learning,
 domain adapatation or covariate shift, where the labeled training samples
 correspond to the labeled realizations of the source distribution and where the
-unlabeled test samples corespond to realizations of the target distribution. At
+unlabeled test samples correspond to realizations of the target distribution. At
 its core, this framework assumes that the underlying objects $\omega$ share a
 same universe $\Omega$ and that the source and target distributions only differ
 in the way they represent these objects. While not verified in all cases, we
-believe this assumption to be met in many practical situations, e.g., when learning to transfer
-across natural images from distinct datasets or when learning to adapt to a change
-of a measurement apparatus (but not of the underlying objects to be observed).
+believe this assumption to be met in many practical situations, e.g., when
+learning to transfer across natural images from distinct datasets but
+representing the same concepts or when learning to adapt to a change of a
+measurement apparatus (but not of the underlying objects to be observed).
 
 % XXX: unsupervised learning
 
