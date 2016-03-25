@@ -29,6 +29,10 @@ New York University\\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+
 \nipsfinalcopy % Uncomment for camera-ready version
 
 \begin{document}
@@ -37,21 +41,21 @@ New York University\\
 
 \begin{abstract}
 
-In classification, transfer learning (or its variants known as covariate shift
+In classification, transfer learning (or its variants known as co-variate shift
 or domain adaptation) arises whenever target instances are governed by a
 distribution that may be arbitrarily different from the distribution of the
-source instances used at training. This problem has traditionally been solved by reweighting
+source instances used at training. This problem has traditionally been solved by re-weighting
 approaches or by learning robust representations over domains. In this work, we
-propose a new paradigm based on the assumption that the covariate shift is only
+propose a new paradigm based on the assumption that the co-variate shift is only
 due to a different representation of the same underlying objects.
 Accordingly, we propose to learn how to transform source instances into target
 instances, possibly across input spaces of distinct dimensions, structures or
 supports. For this purpose, we extend the generative adversarial networks
 framework of \cite{goodfellow2014generative} to a triply adversarial process: a
-transformer network $T$ for generating target instances from source instances, a
+transformer network $G$ for generating target instances from source instances, a
 discriminative network $D$ for separating transformed source instances from
-actual target instances, and a classifier network $C \circ T$ for classifying source
-instances in the projected space. This 3-player game results in a network $T$
+actual target instances, and a classifier network $C \circ G$ for classifying source
+instances in the projected space. This 3-player game results in a network $G$
 capable of transforming source into target instances, while preserving
 separation between classes as enabled by $C$ in the adversarial setup.
 Preliminary experiments demonstrate the potential of this novel approach, with promising
@@ -91,7 +95,7 @@ finite set $\{x_i\}_{i=1}^N$ of its realizations $X(\omega_i)$, for $\omega_i
 \in \Omega$.
 In classification,
 let us further assume that realizations from the source distribution are extended with realizations $\{y_i\}_{i=1}^N$
-of a label random variable $Y:\Omega \mapsto {\cal Y}$.
+of a label random variable $Y:\Omega \mapsto {\cal Y}$, thereby inducing the joint source distribution $p_{X,Y}$.
 Similarly, let assume a (multivariate) random variable $U: \Omega
 \mapsto \mathbb{R}^q$ inducing the target distribution $p_U$, along with a finite set
 $\{u_j\}_{j=1}^M$ of its realizations $U(\omega_j)$, for $\omega_j \in \Omega$.
@@ -109,7 +113,7 @@ finding a transfer function $\hat T$ such that
 P(\{ \omega | \hat T(X(\omega), Y(\omega)) = u \}) = P(\{ \omega' | U(\omega') = u \}) ~\text{for all}~ u \in \mathbb{R}^q.
 \end{equation}
 In words, we are looking for a transfer function $\hat T$ such that realizations
-of $\hat T(X,Y)$ are undistinguisable from realizations of $U$. A function $T$ for
+of $\hat T(X,Y)$ are indistinguishable from realizations of $U$. A function $T$ for
 which Eqn.~\ref{eqn:tf} is true necessarily satisfies Eqn.~\ref{eqn:tf-proxy}.
 The converse is however in general not true, since the sets of events $\{ \omega |
 \hat T(X(\omega), Y(\omega)) = u \}$ and $\{ \omega' | U(\omega') = u \}$ do not need to be
@@ -119,7 +123,7 @@ Eqn.~\ref{eqn:tf-proxy}, and for which Eqn.~\ref{eqn:tf} is {\it plausibly}
 satisfied.
 
 In these terms, our framework encompasses the problems of transfer learning,
-domain adapatation or covariate shift, where the labeled training samples
+domain adaptation or co-variate shift, where the labeled training samples
 correspond to the labeled realizations of the source distribution and where the
 unlabeled test samples correspond to realizations of the target distribution. At
 its core, this framework assumes that the underlying objects $\omega$ share a
@@ -130,10 +134,69 @@ learning to transfer across natural images from distinct datasets but
 representing the same concepts or when learning to adapt to a change of a
 measurement apparatus (but not of the underlying objects to be observed).
 
+\glnote{What are the necessary conditions on $p_{X,Y}$ and $p_U$ for
+        the existence of $T$? and of $\hat T$? I think results can be proven using information theory.}
+
 % XXX: unsupervised learning
 
 
 \section{Method}
+
+Generative adversarial networks (GAN) were first proposed by
+\cite{goodfellow2014generative} as a way to generate samples from random noise
+$z \sim p_Z$. In this work, the authors pit a generative model $G$ against an
+adversary classifier $D$ whose repelling objective is to recognize real from
+fake samples. Both models $G$ and $D$ are trained simultaneously, in such a way
+that $G$ learns to produce samples that are difficult to classify by $D$, while
+$D$ incrementally adapts to changes in $G$. At the equilibrium, $G$ models a
+distribution whose fake samples are recognized by $D$ only by chance. In other
+words, assuming enough capacity in $D$, the distribution $p_{G(Z)}$ of fake
+samples converges towards the distribution of real samples.
+
+In this work, we extend the GAN framework by first noticing that if we replace
+the noise distribution $p_Z$ by the joint source distribution $p_{X,Y}$ and consider
+the real data distribution as the target distribution $p_U$, then the generative
+model $G$ is a transfer function $\hat T : \mathbb{R}^p \times {\cal Y} \mapsto \mathbb{R}^q$
+satisfying Eqn.~\ref{eqn:tf-proxy}. That is, generative adversarial networks
+provide a direct way for learning to transfer.
+
+\begin{theorem}
+At the equilibrium, $G$ satisfies Eqn.~\ref{eqn:tf-proxy}. \glnote{This seems a direct consequence of the convergence results of \cite{goodfellow2014generative}. Needs to be double-checked.}
+\end{theorem}
+
+As noted earlier, transfer functions $\hat T$ satisfying Eqn.~\ref{eqn:tf-proxy}
+are not unique. It is therefore critical to guide
+the adversarial training process in order to obtain a plausible transfer
+function. Of special interest in the context of classification
+are functions $\hat T$  preserving the conditional class distribution in the target space,
+i.e. such that
+\begin{equation}\label{eqn:preservation}
+    p_{Y|X}(y|x) = p_{Y|\hat T(X, Y)}(y|\hat T(x, y)) ~\text{for all}~ x, y \in \mathbb{R}^p \times {\cal Y}.
+\end{equation}
+In words, we are looking for a transfer function $\hat T$ such that realizations
+of $\hat T(X,Y)$ are indistinguishable from realizations of $U$, while preserving
+the class distribution and separability in the target space.
+In order to satisfy this constraint, we extend the GAN framework by
+adding a third network in the pit: a classifier $C$ whose objective is to classify
+labeled source samples in the projected space.
+Accordingly, we extend $G$'s objective function so as to maximize $C$'s accuracy,
+while still fooling $D$. Formally, assuming binary classification (i.e. ${\cal Y} = \{0, 1\}$), the three networks $D$, $C$ and $G$ are
+concurrently trained so as to minimize the respective loss functions:
+
+\begin{align}
+    L(D) &= -\mathbb{E}_{u \sim p_U} [\log(1 - D(u))] -\mathbb{E}_{x,y \sim p_{X,Y}} [\log(D(G(x, y)))] \\
+    L(C) &= -\mathbb{E}_{x \sim p_{X|Y=0}} [\log(1 - C(G(x, y=0)))] -\mathbb{E}_{x \sim p_{X|Y=1}} [\log(C(G(x, y=1)))] \\
+    L(G) &= \mathbb{E}_{x,y \sim p_{X,Y}} [\log(D(G(x, y)))] + L(C)
+\end{align}
+
+This 3-player game results in a network $G$
+capable of transforming source into target instances, while preserving
+separation between classes as enabled by $C$ in the adversarial setup.
+Accordingly, when the transformed source distribution equals the
+target distribution, $C$ converges towards a classifier that can be used
+for classifying samples from the target space, thereby providing a solution
+to transfer learning for classification.  
+
 
 \glnote{Describe GAN approach with three networks.}
 % framework
@@ -148,15 +211,20 @@ measurement apparatus (but not of the underlying objects to be observed).
 
 \section{Experiments}
 
+\glnote{To do. See notebooks for a working proof of concept. }
+
 % - regularization
 % - network architecture (propagate x, similar to highway networks)
 
 \section{Related work}
 
+\glnote{to write}
+
 % also related to multi-view learning
 
 \section{Conclusions}
 
+\glnote{to write}
 
 \subsection*{Acknowledgments}
 
