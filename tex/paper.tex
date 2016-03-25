@@ -195,23 +195,38 @@ separation between classes as enabled by $C$ in the adversarial setup.
 Accordingly, when the transformed source distribution equals the
 target distribution, $C$ converges towards a classifier that can be used
 for classifying samples from the target space, thereby providing a solution
-to transfer learning for classification.  
+to transfer learning for classification.
 
+\glnote{Add figure}
 
-\glnote{Describe GAN approach with three networks.}
-% framework
-% doubly adversarial network
-% T is not unique => triply adversarial + regularization
-% proofs?
+Despite preserving class proportions and separability in the target space, the
+proposed framework does not guarantee that the learned classifier $C$ assigns
+the correct labels $Y(\omega)$ to realizations $U(\omega)$. For instance, when
+$P(Y=0) = P(Y=1)$, the loss function $L(C)$ is equally minimized when the
+correct class is always perfectly predicted, i.e. when $C(G(x,y=0)) = 0$ and
+$C(G(x,y=1)) = 1$ for all $x$, than when the incorrect class is always wrongly
+predicted,  i.e. when $C(G(x,y=0)) = 1$ and $C(G(x,y=1)) = 0$ for all $x$.
+Fortunately, this problem can be mitigated in the common case of
+semi-supervised learning, i.e. when at least a few pairs of {\it seed}
+realizations $U(\omega), Y(\omega)$ are known in the target space. Indeed, these
+seed samples can be used as additional training data when learning $C$, thereby
+indirectly constraining the learning of $G$ towards a transfer function for
+which source instances projected close to the seed samples should share the same
+label, hence yielding a plausible transfer function. Formally,
+the loss function $L(C)$ is replaced with
+\begin{align}\label{eqn:loss-C-semi}
+    L(C) =&~ \gamma (-\mathbb{E}_{x \sim p_{X|Y=0}} [\log(1 - C(G(x, y=0)))] -\mathbb{E}_{x \sim p_{X|Y=1}} [\log(C(G(x, y=1)))]) + \nonumber \\
+          & (1 - \gamma) (-\mathbb{E}_{u \sim p_{U|Y=0}} [\log(1 - C(u)] -\mathbb{E}_{x \sim p_{U|Y=1}} [\log(C(u))])
+\end{align}
+where $\gamma$ is a parameter trading off the weight of incorrect predictions for seed samples
+and where expectations $\mathbb{E}_{u \sim p_{U|Y}}$ are approximated empirically
+over the known realizations in the target space.
 
-\glnote{Regularization}
-
-\glnote{Semi-supervised transfer learning}
-% semi-supervised transfer learning: use seeds from the target space to bootstrap C
 
 \section{Experiments}
 
 \glnote{To do. See notebooks for a working proof of concept. }
+\glnote{Comment on network architecture depending on the kind of transfer.}
 
 % - regularization
 % - network architecture (propagate x, similar to highway networks)
